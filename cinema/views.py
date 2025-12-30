@@ -1,5 +1,5 @@
 from rest_framework.viewsets import ModelViewSet
-from rest_framework.serializers.serializer import Serializer
+from rest_framework.serializers import Serializer
 
 from .models import CinemaHall, Genre, Actor, Movie, MovieSession
 from .serializers import (
