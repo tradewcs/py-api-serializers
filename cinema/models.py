@@ -27,6 +27,10 @@ class Actor(models.Model):
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
 
+    @property
+    def full_name(self) -> str:
+        return str(self)
+
     def __str__(self):
         return self.first_name + " " + self.last_name
 
@@ -37,6 +41,14 @@ class Movie(models.Model):
     duration = models.IntegerField()
     genres = models.ManyToManyField(Genre)
     actors = models.ManyToManyField(Actor)
+
+    @property
+    def actor_names(self):
+        return [actor.full_name for actor in self.actors.all()]
+
+    @property
+    def genre_names(self):
+        return [genre.name for genre in self.genres.all()]
 
     class Meta:
         ordering = ["title"]
@@ -49,6 +61,18 @@ class MovieSession(models.Model):
     show_time = models.DateTimeField()
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
     cinema_hall = models.ForeignKey(CinemaHall, on_delete=models.CASCADE)
+
+    @property
+    def movie_title(self) -> str:
+        return self.movie.title
+
+    @property
+    def genres(self):
+        return self.movie.genre_names
+
+    @property
+    def actors(self):
+        return self.movie.actor_names
 
     class Meta:
         ordering = ["-show_time"]
