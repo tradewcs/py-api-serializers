@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import CinemaHall, Genre, Actor, Movie, MovieSession, Order, Ticket
+from .models import CinemaHall, Genre, Actor, Movie, MovieSession
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
@@ -35,13 +35,27 @@ class MovieListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Movie
-        fields = ("id", "title", "description", "duration", "genres", "actors")
+        fields = (
+            "id",
+            "title",
+            "description",
+            "duration",
+            "genres",
+            "actors"
+        )
 
 
 class MovieWriteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Movie
-        fields = ("id", "title", "description", "duration", "genres", "actors")
+        fields = (
+            "id",
+            "title",
+            "description",
+            "duration",
+            "genres",
+            "actors"
+        )
 
 
 class MovieDetailSerializer(serializers.ModelSerializer):
@@ -50,7 +64,14 @@ class MovieDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Movie
-        fields = ("id", "title", "description", "duration", "genres", "actors")
+        fields = (
+            "id",
+            "title",
+            "description",
+            "duration",
+            "genres",
+            "actors"
+        )
 
 
 class MovieSessionListSerializer(serializers.ModelSerializer):
@@ -91,4 +112,3 @@ class MovieSessionWriteSerializer(serializers.ModelSerializer):
     class Meta:
         model = MovieSession
         fields = ("id", "show_time", "movie", "cinema_hall")
-
