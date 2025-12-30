@@ -19,7 +19,7 @@ class CinemaHall(models.Model):
 class Genre(models.Model):
     name = models.CharField(max_length=255, unique=True)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.name
 
 
@@ -31,7 +31,7 @@ class Actor(models.Model):
     def full_name(self) -> str:
         return str(self)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.first_name + " " + self.last_name
 
 
@@ -43,17 +43,17 @@ class Movie(models.Model):
     actors = models.ManyToManyField(Actor)
 
     @property
-    def actor_names(self):
+    def actor_names(self) -> list[str]:
         return [actor.full_name for actor in self.actors.all()]
 
     @property
-    def genre_names(self):
+    def genre_names(self) -> list[str]:
         return [genre.name for genre in self.genres.all()]
 
     class Meta:
         ordering = ["title"]
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.title
 
 
@@ -67,17 +67,17 @@ class MovieSession(models.Model):
         return self.movie.title
 
     @property
-    def genres(self):
+    def genres(self) -> list[str]:
         return self.movie.genre_names
 
     @property
-    def actors(self):
+    def actors(self) -> list[str]:
         return self.movie.actor_names
 
     class Meta:
         ordering = ["-show_time"]
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.movie.title + " " + str(self.show_time)
 
 
@@ -87,7 +87,7 @@ class Order(models.Model):
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE
     )
 
-    def __str__(self):
+    def __str__(self) -> str:
         return str(self.created_at)
 
     class Meta:
@@ -104,7 +104,7 @@ class Ticket(models.Model):
     row = models.IntegerField()
     seat = models.IntegerField()
 
-    def clean(self):
+    def clean(self) -> None:
         for ticket_attr_value, ticket_attr_name, cinema_hall_attr_name in [
             (self.row, "row", "count_rows"),
             (self.seat, "seat", "count_seats_in_row"),
@@ -122,7 +122,7 @@ class Ticket(models.Model):
                     }
                 )
 
-    def __str__(self):
+    def __str__(self) -> str:
         return (
             f"{str(self.movie_session)} (row: {self.row}, seat: {self.seat})"
         )
